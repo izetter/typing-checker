@@ -9,9 +9,5 @@ import { lorem } from 'faker';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  latinSentence = "ee"
-
-  genLorem() {
-    this.latinSentence = lorem.sentence();
-  }
+  randomText = lorem.sentence();
 }
