@@ -23,4 +23,10 @@ export class AppComponent {
     }
     return A === B ? 'match' : 'no-match';
   }
+
+  restart(){
+    this.randomText = lorem.sentence();
+    document.querySelector('input').value = '';   // How to do these two lines of code but with Angular tools?
+    document.querySelector('input').focus();
+  }
 }
