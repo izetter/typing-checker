@@ -9,5 +9,11 @@ import { lorem } from 'faker';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  randomText = lorem.sentence();
+  randomText: string = lorem.sentence();
+  enteredText: string = '';
+
+  storeInput(input: string){
+    this.enteredText = input;
+    // console.log(input);
+  }
 }

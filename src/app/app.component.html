@@ -4,16 +4,61 @@
 
       <h1 class="title has-text-centered">Typing checker</h1>
 
-      <p class="has-text-centered">{{ randomText }}</p>
+      <p class="has-text-centered">
+        <span *ngFor="let letter of randomText.split(''); let i = index;">({{ letter }}{{ enteredText[i] }})</span> <!-- " index as i "  also works instead of  " let i = index "-->
+      </p>
 
       <div class="field">
-        <input type="text" class="input">
+        <input type="text" class="input" (input)="storeInput($event.target.value)">
       </div>
 
-      <div class="box has-text-centered">
+      <div class="box has-text-centered" *ngIf="randomText === enteredText">
         <h2 class="title">Success!</h2>
       </div>
 
     </div>
   </div>
 </div>
+
+
+<!-- 
+
+About the <span *ngFor="let letter of randomText.split(''); let i = index;">({{ letter }}{{ enteredText[i] }})</span> part:
+
+        First, split('') creates a new array in which each element is a charachter of randomText.
+    Because this basically is a "for of" loop, letter will be the nth element of this new array of charachters.
+        *ngFor creates a <span></span> for every element of the split randomText string, including the
+    interpolation syntaxes and parentheses you can see in the "inner HTML" of every <span>.
+        The interpolations syntaxes do their job, so in every cycle, {{ letter }} prints the current nth element
+    of randomText, and {{ enteredText[i] }} prints the current nth element of enteredText BASED on the index of randomText.
+    SO EVERY NEWLY CREATED SPAN ELEMENT HAS AN INDEX based on the amount of characters randomText has i.e.
+        let i = index refers to the index of randomText/span elements created by *nfFor. *ngFor is only talking about randomText,
+    it NEVER mentions enteredText. This is why when you type something, the first character of enteredText gets placed inside the first
+    pair of parentheses/first span element, which contain the first element of randomText... and so on with
+    the second and third characters typed etc. 
+    Remember that enteredText is bound to an input DOM event!! otherwise this wouldn't work like this!
+
+    You can verify that it's first with first, second with second etcetera by typing a few characters, watch them be pĺaced
+    right next to the randomText characters, then move the cursor to the beginning, type some more and watch the previously
+    typed characters switch to the right because their index in enteredText is no longer the same.
+
+    IMPORTANT!
+    The previous would make sense only within the context of the "Before coloring" commit, beacuse this was just for demonstration.
+
+
+
+    * split('') splits a string between each character beacuse of the empty string argument inside the parentheses denoted
+    by the pair of single quotes. But you can split by many other things such as spaces or regex etc.
+
+    ** split() doesn't actually split the original string, it creates a new array based on the split instructions
+    and the for of loop works over that new array on the fly. That's why I earlier mentioned something about it creating
+    a new array or of this new array of characters, nut later I omitted referring to this newly reated array
+    for simplicity reasons. For example, in "prints the current nth element of randomText" it's not actually printing the
+    current nth element of randomText, but of this newly created array.
+    
+    
+
+  Note you can also iterate through a split string in vanilla JS using a
+  for/for of loop and the split() method.
+
+ -->
